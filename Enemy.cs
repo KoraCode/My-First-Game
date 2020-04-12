@@ -1,21 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnterDialog : MonoBehaviour
+public class Enemy : MonoBehaviour  //制作父类
 {
-    public GameObject enterDialog;
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag=="Player")
-        {
-            enterDialog.SetActive(true);
-        }
-    }
+    protected Animator Anim;
+    protected AudioSource deathAudio;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected virtual void Start()
     {
-        if(collision.tag=="Player")
-        {
-            enterDialog.SetActive(false);
-        }
+        Anim = GetComponent<Animator>();
+        deathAudio = GetComponent<AudioSource>();
+    }
+    public void Death()
+    {
+        Destroy(gameObject);
+    }
+    public void JumpOn()
+    {
+        Anim.SetTrigger("death");
+        deathAudio.Play();
     }
 }
+
